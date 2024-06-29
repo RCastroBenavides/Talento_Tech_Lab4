@@ -1,10 +1,12 @@
-//import {useRef} from "react";
+import { useSelector } from "react-redux";
 
 function Episodios(props) {
-  const lst = props.ep;
-        return(
+    const lst1 = props.ep;
+    let c = useSelector( state => state.cont) ;
+    let lst = useSelector( state => state.epsdios) ;
+   return(
     <div> 
-      <h1>Estoy en episodios </h1>
+      <h1>Estoy en episodios - {c} </h1>
           <ul>
             {lst.map((d, index) => (
                 <li key={index}>
@@ -15,5 +17,4 @@ function Episodios(props) {
           </div>
     );
   }
-
 export default Episodios ;

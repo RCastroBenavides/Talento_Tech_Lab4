@@ -1,7 +1,16 @@
-function Infoper(props) {
+import { useDispatch, useSelector } from "react-redux";
+import { setInc } from "../action";
+
+function Infoper() {
+    let disp = useDispatch();
+    let val = useSelector( state => state.cont );
+    let ip = useSelector ( state => state.infoper);
               return(
-                <><h1>Estoy en Información Personaje </h1>
-                <span className="tamlet">{props.ip}</span></>
+                <div>
+                <h1>{val}</h1>
+                <span className="tamlet">{ip}</span>
+                <button onClick={ () => disp (setInc(1))}> + 1 </button>
+                </div>
       );
     }
     export default Infoper;

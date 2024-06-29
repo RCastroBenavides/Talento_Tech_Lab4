@@ -2,14 +2,14 @@ import'./App.css';
 import {useState,useEffect} from "react";
 import Episodios from "./Componentes/Episodios";
 import Infoper from "./Componentes/Infoper";
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setIP, setInc } from './action';
+import { setEps } from './action';
 
 function App() {
-
-  const [oEpis,setEpis] = useState([]);
+  let disp = useDispatch();
   const [jInfo,setInfo] = useState([]);
-  const [sInfp,setInfp] = useState("");
-   
+     
 async function getData() {
   try {
     const rta = await fetch( 'https://rickandmortyapi.com/api/character' /*, {
@@ -37,16 +37,10 @@ let lst = [];
 };
 
 useEffect( () => { getData() ;}, []);
-
-let verEpisodios = (d) => {
-  console.log( "Episodios: "+JSON.stringify(d.episode));
-  setEpis (d.episode);
- }
 let verInfo = (d) => {
-    console.log( "Origen: "+d.origin.name+"----- URL"+d.origin.url);
-    setInfp ("Origen: "+d.origin.name+"----- URL"+d.origin.url);
- }
-
+  console.log( "Origen: "+d.origin.name+"----- URL"+d.origin.url);
+  disp( setIP ("Origen: "+d.origin.name+"----- URL"+d.origin.url));
+}
 return (
 <div className='App'>
   <h1> PERSONAJES DE RICK & MORTY </h1><div className='container'>
@@ -58,24 +52,26 @@ return (
             da.map((d, i) => (
               <div key={d.id} className='image-item-container'>
                 <img src={d.image} className="image-item" alt={"Imagen ${i}"} />
-                <p>
                 <div className='details-container'>
-                  <button className='tamlet' onClick={() => { verEpisodios(d); } }> PERSONAJE: {d.name} </button>
+                <button className='tamlet' onClick={() =>  disp(setEps(d.episode))}> {d.name} </button>
                   <button className='tamlet' onClick={() => { verInfo(d); } }> OTRA INFO {d.status} </button>
+                  <button className='tamlet' onClick={() =>  disp(setInc(4))}> inc</button>
+                  
                 </div>
-                </p>
-              </div>
+                </div>
+            ))
+          }
+              </div> 
             ))}
           </div>
-        ))}
       </div>
-    </div>
+
     <div className='right'>
-      <div className='Arriba'>
-        <Episodios ep={oEpis} />
+      <div className='arriba'>
+        <Episodios />
       </div>
-      <div className="Abajo">
-        <Infoper ip={sInfp} />
+      <div className="abajo">
+        <Infoper />
       </div>
     </div>
   </div>
