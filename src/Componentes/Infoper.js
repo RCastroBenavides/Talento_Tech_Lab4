@@ -1,16 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
-import { setInc } from "../action";
+import { useSelector } from "react-redux";
 
 function Infoper() {
-    let disp = useDispatch();
-    let val = useSelector( state => state.cont );
-    let ip = useSelector ( state => state.infoper);
-              return(
-                <div>
-                <h1>{val}</h1>
-                <span className="tamlet">{ip}</span>
-                <button onClick={ () => disp (setInc(1))}> + 1 </button>
-                </div>
+  const lst = useSelector( state => state.holaApp.infper);
+  const dat1 = lst.split("-----")
+return(
+     <div className="App">
+      <h1 className="heading">INFORMACIÓN DEL PERSONAJE </h1>
+      <h1> </h1>
+        <ul>{dat1[0]} </ul>
+        <ul>{dat1[1]} </ul>
+        <ul>{dat1[2]} </ul>
+      </div>
       );
     }
     export default Infoper;
